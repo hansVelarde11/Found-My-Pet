@@ -4,7 +4,8 @@
     "password": "Mitiochacalon1",
     "database": "found_my_pet_dev",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "client_encoding": "UTF8"
   },
   "test": {
     "username": "postgres",
