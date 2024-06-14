@@ -1,0 +1,24 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "Mitiochacalon1",
+    "database": "found_my_pet_dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "client_encoding": "UTF8"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "Mitiochacalon1",
+    "database": "found_my_pet_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "Mitiochacalon1",
+    "database": "found_my_pet_prod",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
