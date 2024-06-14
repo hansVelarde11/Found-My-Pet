@@ -19,8 +19,6 @@ module.exports = (sequelize, DataTypes) => {
       email: { type: DataTypes.STRING, allowNull: false },
       password: { type: DataTypes.STRING, allowNull: false },
       fecha_registro: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
-      ciudad: DataTypes.STRING,
-      foto_perfil: DataTypes.STRING,
       first_name: DataTypes.STRING,
       last_name: DataTypes.STRING,
       phone_number: DataTypes.STRING,
