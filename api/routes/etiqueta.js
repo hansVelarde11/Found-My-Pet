@@ -20,3 +20,5 @@ router.patch("/:id", etiquetaController.update);
 router.delete("/:id", etiquetaController.deleteTag);
 router.delete("/tag/:tagId/post/:postId", etiquetaController.unsetTagToPost);
 router.delete("/tag/:tagId/pet/:petId", etiquetaController.unsetTagToPet);
+
+module.exports = router

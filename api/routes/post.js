@@ -18,3 +18,5 @@ router.get("/:useId", postController.getBanPostByUser);
 router.get("/ban/:userId", postController.getBanPostByUser);
 router.get("/:idPost/tags", postController.getTagsByPost);
 router.get("/:idPost/comments", postController.getCommentsByPost);
+
+module.exports = router

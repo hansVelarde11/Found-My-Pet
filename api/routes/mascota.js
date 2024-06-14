@@ -7,3 +7,5 @@ router.patch('/:id',mascotaController.update)
 router.delete(':id',mascotaController.deletePet)
 router.get('/:petId/user', mascotaController.getUserByPet)
 router.get('/', mascotaController.getAllPets)
+
+module.exports = router

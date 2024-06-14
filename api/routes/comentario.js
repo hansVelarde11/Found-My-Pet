@@ -16,3 +16,5 @@ router.patch('/ban/:id', comentarioController.ban)
 
 //DELETE
 router.delete('/:id', comentarioController.deleteComment)
+
+module.exports = router
