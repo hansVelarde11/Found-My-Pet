@@ -162,19 +162,27 @@ const getAllUsers = async (req, res) => {
     const offset = (page-1)*limit
 
     //Consulta en BD
-    const users = await User.findAll({ where: whereClause, limit: limit, offset: offset });
+    const {count, rows} = await User.findAndCountAll({ where: whereClause, limit: limit, offset: offset });
 
     //Calcular numero total de usuarios por pagina
-    const totalCount = await User.count({ where: whereClause })
-    const totalPages = Math.ceil(totalCount/limit)
+    const totalPages = Math.ceil(count/limit)
+    const hasNextPage = page < totalPages
+    const hasPreviouspage = page > 1
 
     //Preparar response con data y paginacion
     const response = {
-      data: users,
-      pagination: {
-        currentPage: page,
-        totalPages: totalPages,
-        hasNextPage: page < totalPages
+      status: "success",
+      code: 200,
+      message: "Users obtenidos correctamente",
+      data:{
+        users: rows,
+        pagination: {
+          currentPage: page,
+          totalPages: totalPages,
+          totalCount: count,
+          hasNextPage: hasNextPage,
+          hasPreviouspage: hasPreviouspage
+        }
       }
     }
 

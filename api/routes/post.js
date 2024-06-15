@@ -14,7 +14,7 @@ router.patch("/allow/:idPost", postController.allowPost);
 router.delete("/:id", postController.deletePost);
 
 //GET
-router.get("/:useId", postController.getBanPostByUser);
+router.get("/:userId", postController.getPostByUser);
 router.get("/ban/:userId", postController.getBanPostByUser);
 router.get("/:idPost/tags", postController.getTagsByPost);
 router.get("/:idPost/comments", postController.getCommentsByPost);
