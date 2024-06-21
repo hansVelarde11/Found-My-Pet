@@ -132,19 +132,68 @@ const getAllPostsByTag = async (req, res) => {
   }
 };
 
-const getAllPetsByTag = (req, res) => {};
+const getAllPetsByTag = (req, res) => {};//Falta implementar el controller pets
                       
-const getAllTags = (req, res) => {};
+const getAllTags = async (req, res) => {
+  try {
+    const { page=1,limit=10 } = req.query
+    const offset = (page-1)*limit
 
-const setTagToPost = (req, res) => {};
+    //Obtener todas las etiquetas
+    const {count,rows} = await Etiqueta.findAndCountAll({
+      limit,
+      offset,
+      attributes:['id','nombre']
+    });
 
-const setTagToPet = (req, res) => {};
+    //Calcular el paginado
+    const totalPages = Math.ceil(count/limit)
+    const hasNextPage = page<totalPages
+    const hasPreviousPage = page>1
 
-const getTagByName = (req, res) => {};
+    //Responder con las etiquetas
+    res.status(200).json({ 
+      status: "success",
+      code: 200,
+      message:  "Etiquetas obtenidas correctamente",
+      data: {
+        tags: rows,
+        pageInfo: {
+          currentPage: page,
+          totalPages: totalPages,
+          totalCount: count,
+          hasNextPage: hasNextPage,
+          hasPreviousPage: hasPreviousPage
+        }
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
-const unsetTagToPost = (req, res) => {};
 
-const unsetTagToPet = (req, res) => {};
+const getTagByName = async (req, res) => {
+  try {
+    const { name } = req.params;
+    const tag = await Etiqueta.findOne({ where: { nombre: name } });
+    if (!tag) {
+      return res.status(404).json({ status: "error",
+        code: 404,
+        message: "Etiqueta no encontrada"
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      code: 200,
+      message: "Etiqueta obetnida correctamente",
+      data:  tag
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 
 module.exports = {
   register,
@@ -153,9 +202,5 @@ module.exports = {
   getAllPostsByTag,
   getAllPetsByTag,
   getAllTags,
-  setTagToPost,
-  setTagToPet,
   getTagByName,
-  unsetTagToPet,
-  unsetTagToPost,
 };
