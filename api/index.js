@@ -19,7 +19,7 @@ app.use('/users', userRoutes)
 app.use('/posts',postRoutes)
 app.use('/pets',mascotaRoutes)
 app.use('/tags',etiquetaRoutes)
-app.use('/commnts', comentarioRoutes)
+app.use('/comments', comentarioRoutes)
 
 
 // Iniciar el servidor

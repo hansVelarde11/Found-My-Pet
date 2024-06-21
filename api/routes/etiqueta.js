@@ -5,7 +5,7 @@ const etiquetaController = require("../controllers/etiquetaController");
 //GET
 router.get("/:id/pets", etiquetaController.getAllPetsByTag);
 router.get("/", etiquetaController.getAllTags);
-router.get("/:id/comments", etiquetaController.getAllPostsByTag);
+router.get("/:id/posts", etiquetaController.getAllPostsByTag);
 router.get("/:name", etiquetaController.getTagByName);
 
 //POST

@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
       longitude: DataTypes.DOUBLE,
       tags: DataTypes.ARRAY(DataTypes.TEXT),
       visibility: DataTypes.STRING,
-      comments_ids: DataTypes.ARRAY(DataTypes.UUID),
       likes_count: { type: DataTypes.INTEGER, defaultValue: 0 },
       comments_count: { type: DataTypes.INTEGER, defaultValue: 0 },
       is_active: { type: DataTypes.BOOLEAN, defaultValue: true },

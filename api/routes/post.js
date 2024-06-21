@@ -7,8 +7,9 @@ router.post("/", postController.register);
 
 //PATCH
 router.patch("/:id", postController.update);
-router.patch("/ban/:idPost", postController.banPost);
-router.patch("/allow/:idPost", postController.allowPost);
+router.put("/ban/:idPost", postController.banPost);
+router.put("/allow/:idPost", postController.allowPost);
+router.patch("/:idPost/like", postController.incrementLike)
 
 //DELETE
 router.delete("/:id", postController.deletePost);
