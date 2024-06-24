@@ -60,7 +60,7 @@ const update = async (req, res) => {
     }
 
     //Response con etiquetas
-    const petWithTags = await Mascota.findByPk(id,{include:[{model: Etiqueta, as:'etiquetas', atributte}]})
+    const petWithTags = await Mascota.findByPk(id,{include:[{model: Etiqueta, as:'etiquetas', attributes:['nombre']}]})
 
     //Respuesta
     res.status(200).json({
@@ -74,12 +74,71 @@ const update = async (req, res) => {
   }
 };
 
-const deletePet = (req, res) => {};
+const deletePet = async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const  pet = await Mascota.findByPk(id)
+
+    if(!pet){
+      return res.status(404).json({
+        status: "error",
+        code: 404,
+        message: "Mascota no encontrada"
+      })
+    }
+
+    await pet.destroy()
+
+    res.status(200).json({
+      status: "success",
+      code: 200,
+      message: "Mascota eliminada correctamente"
+    })
+
+  } catch (error) {
+    res.status(500).json({error: error})
+  }
+};
 
 const getUserByPet = (req, res) => {};
 
-const getAllPets = (req,res)=>{
+const getAllPets = async (req,res)=>{
+  try {
+    const { page=1,limit=10 } = req.query
+    const offset = (page-1)*limit
 
+    const { count,rows } = await Mascota.findAndCountAll({
+      limit,
+      offset,
+      order:[['created_at', 'DESC']]
+    })
+
+    const totalPages = Math.ceil(count/limit)
+    const hasNextPage = page>totalPages
+    const hasPreviouspage = page>1
+
+    const response = {
+      status: "success",
+      code: 200,
+      message: "Mascotas obtenidas correctamente",
+      data: {
+        pets: rows,
+        pageInfo: {
+          currentPage: page,
+          totalPages: totalPages,
+          totalCount: count,
+          hasNextPage: hasNextPage,
+          hasPreviouspage: hasPreviouspage
+        }
+      }
+
+    }
+
+    res.status(200).json(response)
+  } catch (error) {
+    res.status(500).json({error: error.message})
+  }
 }
 
 module.exports = {

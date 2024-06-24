@@ -9,7 +9,7 @@ router.post('/',mascotaController.register)
 router.patch('/:id',mascotaController.update)
 
 //DELETE
-router.delete(':id',mascotaController.deletePet)
+router.delete('/:id',mascotaController.deletePet)
 
 //GET
 router.get('/:petId/user', mascotaController.getUserByPet)
