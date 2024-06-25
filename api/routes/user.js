@@ -2,8 +2,12 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 
+//Validaciones
+const validateRequest = require('../middlewares/validateRequest')
+const { registerSchema } = require('../validation/userValidation/registerSchema')
+
 //POST
-router.post("/", userController.register);
+router.post("/", validateRequest(registerSchema) , userController.register);
 
 //PATCH
 router.patch("/:id", userController.update);
