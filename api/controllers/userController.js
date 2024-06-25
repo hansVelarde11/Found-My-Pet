@@ -1,5 +1,5 @@
-const { User } = require("../models");
-const { Op } = require("sequelize");
+const { User, Mascota } = require("../models");
+const { Op, where } = require("sequelize");
 const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {
@@ -232,6 +232,52 @@ const getUserById = async (req, res) => {
   }
 };
 
+const getPetsByUser = async ( req,res )=>{
+  try {
+    const { id } = req.params
+    const { page=1,limit=10 } = req.query
+    const offset = (page-1)*10
+
+    const user = await User.findByPk(id)
+
+    if(!user){
+      res.status(404).json({
+        status: "error",
+        code: 404,
+        message: "Usuario no existe"
+      })
+    }
+
+    const { count,rows } = await Mascota.findAndCountAll({where:{user_id:id },
+    limit,offset,
+  order: [['created_at','DESC']]})
+
+    const totalPages = Math.ceil(count/limit)
+    const hasNextPage  = page<totalPages
+    const hasPreviouspage = page>1
+
+    const response = {
+      status: 'success',
+      code: 200,
+      message: 'Mascotas del usuario obtenidas correctamente',
+      data: {
+        pets: rows,
+        pageInfo:{
+          currentPage: page,
+          totalPages: totalPages,
+          totalCount: count,
+          hasNextPage: hasNextPage,
+          hasPreviouspage: hasPreviouspage
+        }
+      }
+    }
+
+    res.status(200).json(response)
+  } catch (error) {
+    res.status(500).json({error: error.message})
+  }
+}
+
 module.exports = {
   register,
   update,
@@ -239,4 +285,5 @@ module.exports = {
   getAllUsers,
   savePreferences,
   getUserById,
+  getPetsByUser
 };

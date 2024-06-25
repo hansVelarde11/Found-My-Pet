@@ -3,7 +3,7 @@ const router = express.Router();
 const etiquetaController = require("../controllers/etiquetaController");
 
 //GET
-router.get("/:id/pets", etiquetaController.getAllPetsByTag);
+router.get("/pets", etiquetaController.getAllPetsByTags);
 router.get("/", etiquetaController.getAllTags);
 router.get("/:id/posts", etiquetaController.getAllPostsByTag);
 router.get("/:name", etiquetaController.getTagByName);

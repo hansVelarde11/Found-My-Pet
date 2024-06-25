@@ -101,8 +101,6 @@ const deletePet = async (req, res) => {
   }
 };
 
-const getUserByPet = (req, res) => {};
-
 const getAllPets = async (req,res)=>{
   try {
     const { page=1,limit=10 } = req.query
@@ -141,10 +139,35 @@ const getAllPets = async (req,res)=>{
   }
 }
 
+const getPetById = async (req,res)=>{
+  try {
+    const { id } = req.params
+
+    const pet = await Mascota.findByPk(id)
+
+    if(!pet){
+      res.status(404).json({
+        status: 'error',
+        code: 404,
+        message: "Mascota no encontrada"
+      })
+    }
+
+    res.status(200).json({
+      status: "success",
+      code: 200,
+      message: 'Mascota obtenida correctamente',
+      data: pet
+    })
+  } catch (error) {
+    res.status(500).json({ error: error.message})
+  }
+}
+
 module.exports = {
   deletePet,
   getAllPets,
-  getUserByPet,
   register,
   update,
+  getPetById
 };

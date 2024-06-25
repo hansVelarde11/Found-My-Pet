@@ -132,7 +132,62 @@ const getAllPostsByTag = async (req, res) => {
   }
 };
 
-const getAllPetsByTag = (req, res) => {};//Falta implementar el controller pets
+const getAllPetsByTags = async (req, res) => {
+  try {
+    const { tags } = req.query
+
+    if(!tags){
+      return res.status(400).json({
+        status: "error",
+        code: 404,
+        message: "Se requiere etiquetas a buscar"
+      })
+    }
+
+    const tagList = tags.split(',')
+
+    //Buscar las estiqueras en base de datos
+    const etiquetas = await Etiqueta.findAll({
+      where: {
+        nombre: {
+          [Op.in]: tagList
+        }
+      },
+      include: [{
+        model: Mascota,
+        as: 'mascotas',
+        through: {attributes: []}
+      }]
+    })
+
+    if(etiquetas.length ===0){
+      res.status(404).json({
+        status: "error",
+        code: 404,
+        message: "No se encontraron las etiquetas "
+      })
+    }
+
+    //extraer las macotas de las etiquetas encontradas
+    const mascotas = []
+    etiquetas.forEach(etiqueta=>{
+      etiqueta.mascotas.forEach(mascota=>{
+        if(!mascotas.some(existingMascota => existingMascota.id === mascota.id)) {
+          mascotas.push(mascota)
+        }
+      })
+    })
+
+    res.status(200).json({
+      status:'success',
+      code: 200,
+      message: "Mascotas obtenidas correctamente",
+      data: mascotas
+    })
+  } catch (error) {
+    res.status(500).json({error: error.message})
+  }
+};//Falta implementar el controller pets
                       
 const getAllTags = async (req, res) => {
   try {
@@ -172,7 +227,6 @@ const getAllTags = async (req, res) => {
   }
 };
 
-
 const getTagByName = async (req, res) => {
   try {
     const { name } = req.params;
@@ -200,7 +254,7 @@ module.exports = {
   update,
   deleteTag,
   getAllPostsByTag,
-  getAllPetsByTag,
+  getAllPetsByTags,
   getAllTags,
   getTagByName,
 };

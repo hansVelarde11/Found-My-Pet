@@ -15,5 +15,7 @@ router.delete("/:id", userController.deleteUser);
 //GET
 router.get("/", userController.getAllUsers);
 router.get('/:id', userController.getUserById)
+router.get('/:id/pets', userController.getPetsByUser
+)
 
 module.exports = router
