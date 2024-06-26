@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const deleteCommentSchema = Joi.object({
+const banCommentSchema = Joi.object({
   id: Joi.string().uuid().required().messages({
     'string.base': 'El ID del comentario debe ser una cadena',
     'string.uuid': 'El ID del comentario debe ser un UUID válido',
@@ -8,4 +8,4 @@ const deleteCommentSchema = Joi.object({
   }),
 });
 
-module.exports = deleteCommentSchema;
+module.exports = banCommentSchema;
