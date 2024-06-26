@@ -187,7 +187,7 @@ const getAllPetsByTags = async (req, res) => {
   } catch (error) {
     res.status(500).json({error: error.message})
   }
-};//Falta implementar el controller pets
+}
                       
 const getAllTags = async (req, res) => {
   try {
