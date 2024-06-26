@@ -1,5 +1,5 @@
 const { User, Mascota } = require("../models");
-const { Op, where } = require("sequelize");
+const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
 
 const register = async (req, res) => {

@@ -5,12 +5,13 @@ const userController = require("../controllers/userController");
 //Validaciones
 const validateRequest = require('../middlewares/validateRequest')
 const { registerSchema } = require('../validation/userValidation/registerSchema')
+const { updateSchema } = require('../validation/userValidation/updateSchema')
 
 //POST
 router.post("/", validateRequest(registerSchema) , userController.register);
 
 //PATCH
-router.patch("/:id", userController.update);
+router.patch("/:id", validateRequest(updateSchema), userController.update);
 router.patch("/:id/settings", userController.savePreferences);
 
 //DELETE
