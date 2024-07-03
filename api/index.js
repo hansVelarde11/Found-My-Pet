@@ -2,7 +2,8 @@ const express = require('express');
 const { sequelize } = require('./models/index'); // Importar sequelize y el modelo Pet desde models/index.js
 const morgan = require('morgan')
 const app = express();
-const port = 3000;
+require("dotenv").config()
+const port = process.env.PORT;
 
 //IMPORTANDO LAS RUTAS
 const userRoutes = require('./routes/user')

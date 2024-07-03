@@ -3,9 +3,9 @@ const { Op } = require("sequelize");
 
 const register = async (req, res) => {
   try {
-    const { content, userId } = req.body;
+    const { content } = req.body;
     const { postId } = req.params;
-    //const userId = req.user.id || req.query; // Suponiendo que 'req.user' contiene el usuario autenticado
+    const userId = req.user.id; 
 
     // Verificar si el post al cual se va a comentar existe
     const post = await Post.findByPk(postId);

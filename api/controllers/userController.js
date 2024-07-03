@@ -1,11 +1,13 @@
 const { User, Mascota } = require("../models");
 const { Op } = require("sequelize");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken')
+const { JWT_SECRET, JWT_EXPIRES_IN } = process.env
 
 const register = async (req, res) => {
   try {
     // Validar si email ya se utilizó
-    const { email, password, date_of_birth } = req.body;
+    const { email, password } = req.body;
     const verifyEmail = await User.findOne({ where: { email } });
     if (verifyEmail) {
       return res.status(400).json({ message: "Email ya registrado" });
@@ -278,6 +280,56 @@ const getPetsByUser = async ( req,res )=>{
   }
 }
 
+const login = async (req,res)=>{
+  try {
+    const { username, password } = req.body
+
+    const user = await User.findOne({where: {username}})
+
+    //Validar username
+    if(!user){
+      return res.status(401).json({
+        status: 'error',
+        code: 401,
+        message: 'Username no registrado'
+      })
+    }
+
+    //Validar contraseña
+    const validPassword = await bcrypt.compare(password,user.password)
+    if(!validPassword){
+      return res.status(401).json({
+        status:'error',
+        code: 401,
+        message: "Contraseña Inválida"
+      })
+    }
+
+    //Generar token
+    const token = jwt.sign({
+      id: user.id,
+      username: user.username,
+      notification_preferences: user.notification_preferences,
+      privacy_settings: user.privacy_settings,
+      is_active: user.is_active,
+      role: user.role
+    },
+    JWT_SECRET,{
+      expiresIn: JWT_EXPIRES_IN
+    })
+
+    //Respuesta
+    res.status(200).json({
+      status: 'success',
+      code: 200,
+      message: 'Login exitoso',
+      data:{token}
+    })
+  } catch (error) {
+    res.status(500).json({error: error.message})
+  }
+}
+
 module.exports = {
   register,
   update,
@@ -285,5 +337,6 @@ module.exports = {
   getAllUsers,
   savePreferences,
   getUserById,
-  getPetsByUser
+  getPetsByUser,
+  login
 };

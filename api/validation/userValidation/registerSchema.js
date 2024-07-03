@@ -2,12 +2,12 @@ const Joi = require('joi');
 
 const registerSchema = Joi.object({
   username: Joi.string()
-    .regex(/^[a-zA-Z0-9]{1,15}$/)
-    .required()
-    .messages({
-      'string.empty': 'El username es obligatorio',
-      'string.pattern.base': 'El username debe contener solo letras y números y tener máximo 15 caracteres',
-    }),
+  .pattern(/^[a-zA-Z0-9!@#$%^&*()_+=[\]{};':"\\|,.<>/?-]{4,15}$/)
+  .required()
+  .messages({
+    'string.empty': 'El nombre de usuario es obligatorio',
+    'string.pattern.base': 'El nombre de usuario debe contener solo letras, números y signos, y tener entre 4 y 15 caracteres',
+  }),
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .required()
