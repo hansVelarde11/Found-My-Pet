@@ -17,7 +17,8 @@ const register = async (req, res) => {
         return etiquetaInstance
       }))
       await newPet.setEtiquetas(etiquetaInstances)
-    }
+    } 
+    
 
     //Respuesta 
     res.status(201).json({

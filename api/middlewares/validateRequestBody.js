@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-const validateRequest = (schema)=>{
+const validateRequestBody = (schema)=>{
     return (req,res,next)=>{
         const { error } = schema.validate(req.body)
         if(error){
@@ -15,4 +15,4 @@ const validateRequest = (schema)=>{
 }
 
 
-module.exports = validateRequest
+module.exports = validateRequestBody
