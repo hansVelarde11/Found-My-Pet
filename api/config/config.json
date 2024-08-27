@@ -1,0 +1,24 @@
+{
+  "development": {
+    "username": "${DB_USERNAME}",
+    "password": "${DB_PASSWORD}",
+    "database": "${DB_NAME_DEV}",
+    "host": "${DB_HOST}",
+    "dialect": "postgres",
+    "client_encoding": "UTF8"
+  },
+  "test": {
+    "username": "${DB_USERNAME}",
+    "password": "${DB_PASSWORD}",
+    "database": "${DB_NAME_TEST}",
+    "host": "${DB_HOST}",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "${DB_USERNAME}",
+    "password": "${DB_PASSWORD}",
+    "database": "${DB_NAME_PROD}",
+    "host": "${DB_HOST}",
+    "dialect": "postgres"
+  }
+}
