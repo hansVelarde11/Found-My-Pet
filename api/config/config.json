@@ -1,24 +1,24 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "",
-    "database": "found_my_pet_dev",
-    "host": "127.0.0.1",
+    "username": "${DB_USERNAME}",
+    "password": "${DB_PASSWORD}",
+    "database": "${DB_NAME_DEV}",
+    "host": "${DB_HOST}",
     "dialect": "postgres",
     "client_encoding": "UTF8"
   },
   "test": {
-    "username": "postgres",
-    "password": "",
-    "database": "found_my_pet_test",
-    "host": "127.0.0.1",
+    "username": "${DB_USERNAME}",
+    "password": "${DB_PASSWORD}",
+    "database": "${DB_NAME_TEST}",
+    "host": "${DB_HOST}",
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "",
-    "database": "found_my_pet_prod",
-    "host": "127.0.0.1",
+    "username": "${DB_USERNAME}",
+    "password": "${DB_PASSWORD}",
+    "database": "${DB_NAME_PROD}",
+    "host": "${DB_HOST}",
     "dialect": "postgres"
   }
 }
