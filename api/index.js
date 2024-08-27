@@ -2,6 +2,7 @@ const express = require('express');
 const { sequelize } = require('./models/index'); // Importar sequelize y el modelo Pet desde models/index.js
 const morgan = require('morgan')
 const app = express();
+const cors = require('cors')
 require("dotenv").config()
 const port = process.env.PORT;
 
@@ -14,6 +15,7 @@ const comentarioRoutes = require('./routes/comentario')
 
 
 // Middleware
+app.use(cors())
 app.use(express.json());
 app.use(morgan("dev"))
 app.use('/users', userRoutes)

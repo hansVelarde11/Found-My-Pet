@@ -323,7 +323,10 @@ const login = async (req,res)=>{
       status: 'success',
       code: 200,
       message: 'Login exitoso',
-      data:{token}
+      data:{
+        token:token,
+        user:user
+      }
     })
   } catch (error) {
     res.status(500).json({error: error.message})

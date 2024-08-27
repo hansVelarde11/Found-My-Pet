@@ -1,38 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const postController = require("../controllers/postController");
-
-//Validaciones
-const validateRequest = require('../middlewares/validateRequest')
-const {allowPostSchema} = require('../validation/postValidation/allowPostSchema')
-const {banPostSchema} = require('../validation/postValidation/banPostSchema')
-const {deletePostSchema} = require('../validation/postValidation/deletePostSchema')
-const {getBanPostByUserSchema} = require('../validation/postValidation/getBanPostByUserSchema')
-const {getCommentsByPostSchema} = require('../validation/postValidation/getCommentsByPostSchema')
-const {getPostByUserSchema} = require('../validation/postValidation/getPostByUserSchema')
-const {getTagsByPostSchema} = require('../validation/postValidation/getTagsByPostSchema')
-const {incrementLikeSchema} = require('../validation/postValidation/incrementLikeSchema')
-const {registerSchema} = require('../validation/postValidation/registerSchema')
-const {updateSchema} = require('../validation/postValidation/updateSchema')
-
-
+const authenticate = require('../middlewares/authenticate')
 
 //POST
-router.post("/", validateRequest(registerSchema), postController.register);
+router.post("/", authenticate, postController.register);
 
 //PATCH
-router.patch("/:id", validateRequest(updateSchema), postController.update);
-router.put("/ban/:idPost", validateRequest(banPostSchema), postController.banPost);
-router.put("/allow/:idPost", validateRequest(allowPostSchema), postController.allowPost);
-router.patch("/:idPost/like", validateRequest(incrementLikeSchema), postController.incrementLike)
+router.patch("/:id", authenticate,  postController.update);
+router.put("/ban/:idPost", authenticate, postController.banPost);
+router.put("/allow/:idPost", authenticate, postController.allowPost);
+router.patch("/:idPost/like", authenticate, postController.incrementLike)
 
 //DELETE
-router.delete("/:id", validateRequest(deletePostSchema), postController.deletePost);
+router.delete("/:id", authenticate,postController.deletePost);
 
 //GET
-router.get("/:userId", validateRequest(getPostByUserSchema), postController.getPostByUser);
-router.get("/ban/:userId", validateRequest(getBanPostByUserSchema), postController.getBanPostByUser);
-router.get("/:idPost/tags", validateRequest(getTagsByPostSchema), postController.getTagsByPost);
-router.get("/:idPost/comments", validateRequest(getCommentsByPostSchema), postController.getCommentsByPost);
+router.get("/:userId", authenticate, postController.getPostByUser);
+router.get("/ban/:userId",  authenticate,postController.getBanPostByUser);
+router.get("/:idPost/tags", authenticate,postController.getTagsByPost);
+router.get("/:idPost/comments", authenticate,postController.getCommentsByPost);
+router.get("/", postController.getAll)
 
 module.exports = router

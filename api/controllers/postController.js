@@ -314,7 +314,41 @@ const incrementLike = async (req,res) =>{
   }
 }
 
+const getAll = async (req,res)=>{
+  try {
+    const { page=1, limit=10 } = req.query
+    const offset = (page-1)*limit
+
+    const { count, rows } = await Post.findAndCountAll({limit,offset})
+
+    const totalPages = Math.ceil(count / limit)
+    const hasNextPage = page<totalPages
+    const hasPreviouspage = page>1
+
+    const response = {
+      status: "success",
+      code: 200,
+      message: "Posts obtenidos correctamente",
+      data:{
+        posts: rows,
+        pagination: {
+          currentPage: page,
+          totalPages:  totalPages,
+          totalCount: count,
+          hasNextPage: hasNextPage,
+          hasPreviouspage: hasPreviouspage
+        }
+      }
+    }
+
+    res.status(200).json(response)
+  } catch (error) {
+    res.status(500).json({error:error.message})
+  }
+}
+
 module.exports = {
+  getAll,
   register,
   update,
   deletePost,
